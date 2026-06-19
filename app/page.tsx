@@ -1,66 +1,135 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { useRef } from "react";
+import { Sparkles } from "lucide-react";
+import Header from "@/components/Header";
+import InputForm from "@/components/InputForm";
+import ResultsPanel from "@/components/ResultsPanel";
+import LoadingState from "@/components/LoadingState";
+import ErrorMessage from "@/components/ErrorMessage";
+import { useGenerate } from "@/hooks/useGenerate";
 
 export default function Home() {
+  const { result, isLoading, error, generate, reset } = useGenerate();
+  const formRef = useRef<HTMLDivElement>(null);
+
+  const handleStartOver = () => {
+    reset();
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
+    <>
+      <Header />
+      <main
+        style={{
+          maxWidth: "1120px",
+          margin: "0 auto",
+          padding: "0 24px 80px",
+        }}
+      >
+        {/* Hero */}
+        <section
+          ref={formRef}
+          style={{
+            paddingTop: "72px",
+            paddingBottom: "56px",
+            textAlign: "center",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "10px",
+              marginBottom: "20px",
+            }}
+          >
+            <Sparkles size={22} style={{ color: "var(--color-accent)" }} />
+            <span
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontWeight: 500,
+                fontSize: "0.9rem",
+                color: "var(--color-accent)",
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
+              }}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
+              AI-powered application tailoring
+            </span>
+          </div>
+          <h1
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontWeight: 900,
+              fontSize: "clamp(2.5rem, 6vw, 4rem)",
+              color: "var(--color-text)",
+              lineHeight: 1.1,
+              margin: "0 auto 20px",
+              maxWidth: "780px",
+            }}
+          >
+            Your CV. Their job.{" "}
+            <span style={{ color: "var(--color-accent)" }}>Perfect match.</span>
+          </h1>
+          <p
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: "clamp(1rem, 2.5vw, 1.1875rem)",
+              color: "var(--color-muted)",
+              lineHeight: 1.7,
+              margin: "0 auto",
+              maxWidth: "620px",
+            }}
+          >
+            Paste a job description and your CV — Covrd writes a tailored cover
+            letter and shows exactly what keywords you&apos;re missing.
           </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+        </section>
+
+        {/* Input form card */}
+        <section
+          style={{
+            backgroundColor: "var(--color-surface)",
+            border: "1px solid var(--color-border)",
+            borderRadius: "20px",
+            padding: "36px",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+            marginBottom: "48px",
+          }}
+        >
+          <InputForm onSubmit={generate} isLoading={isLoading} />
+        </section>
+
+        {/* API-level error card (rate limit, network) */}
+        {error && !isLoading && (
+          <section style={{ marginBottom: "48px" }}>
+            <ErrorMessage message={error} variant="card" onRetry={handleStartOver} />
+          </section>
+        )}
+
+        {/* Loading skeletons */}
+        {isLoading && (
+          <section>
+            <LoadingState />
+          </section>
+        )}
+
+        {/* Results */}
+        {result && !isLoading && (
+          <section>
+            <ResultsPanel
+              result={result}
+              onRegenerate={() => {
+                reset();
+              }}
+              onStartOver={handleStartOver}
             />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          </section>
+        )}
       </main>
-    </div>
+    </>
   );
 }
