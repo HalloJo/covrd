@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Rounded green background -->
+  <rect width="32" height="32" rx="7" fill="#3D6B4F"/>
+  <!-- White document with dog-ear top-right corner -->
+  <path d="M7 5 H21 L26 10 V27 H7 Z" fill="white"/>
+  <!-- Dog-ear fold triangle -->
+  <path d="M21 5 L26 10 H21 Z" fill="#C8DED0"/>
+  <!-- Text lines representing cover letter content -->
+  <rect x="10.5" y="14" width="11" height="1.8" rx="0.9" fill="#3D6B4F"/>
+  <rect x="10.5" y="18" width="11" height="1.8" rx="0.9" fill="#3D6B4F"/>
+  <rect x="10.5" y="22" width="7" height="1.8" rx="0.9" fill="#3D6B4F"/>
+</svg>
