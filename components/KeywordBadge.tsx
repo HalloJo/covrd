@@ -17,30 +17,12 @@ export default function KeywordBadge({
 
   return (
     <span
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "5px",
-        padding: "5px 12px",
-        borderRadius: "9999px",
-        fontFamily: "var(--font-sans)",
-        fontWeight: 500,
-        fontSize: "0.8125rem",
-        backgroundColor: isMissing ? "#FEF3C7" : "var(--color-accent-light)",
-        color: isMissing ? "var(--color-warning)" : "var(--color-accent)",
-        border: `1px solid ${isMissing ? "#FDE68A" : "#BBD8C6"}`,
-        animation: "var(--animate-fade-in)",
-        animationDelay: delay,
-        opacity: 0,
-        transition: "transform 0.15s",
-        cursor: "default",
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLSpanElement).style.transform = "scale(1.05)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLSpanElement).style.transform = "scale(1)";
-      }}
+      className={`inline-flex items-center gap-1.25 py-1.25 px-3 rounded-full font-sans font-medium text-[0.8125rem] border animate-fade-in opacity-0 transition-transform duration-150 cursor-default hover:scale-105 ${
+        isMissing
+          ? "bg-[#FEF3C7] text-warning border-[#FDE68A]"
+          : "bg-accent-light text-accent border-[#BBD8C6]"
+      }`}
+      style={{ animationDelay: delay }}
     >
       <Tag size={11} />
       {keyword}

@@ -19,34 +19,7 @@ function OutlineButton({
   return (
     <button
       onClick={onClick}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "8px",
-        fontFamily: "var(--font-sans)",
-        fontWeight: 500,
-        fontSize: "0.9375rem",
-        color: "var(--color-accent)",
-        backgroundColor: "transparent",
-        border: "1px solid var(--color-accent)",
-        borderRadius: "9999px",
-        padding: "10px 24px",
-        cursor: "pointer",
-        transition: "all 0.2s",
-        minHeight: "44px",
-        flex: "1 1 auto",
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.backgroundColor =
-          "var(--color-accent-light)";
-        (e.currentTarget as HTMLButtonElement).style.transform = "scale(1.02)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.backgroundColor =
-          "transparent";
-        (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)";
-      }}
+      className="flex items-center justify-center gap-2 font-sans font-medium text-[0.9375rem] text-accent bg-transparent border border-accent rounded-full py-2.5 px-6 cursor-pointer transition-all duration-200 min-h-11 flex-auto hover:bg-accent-light hover:scale-[1.02]"
     >
       {children}
     </button>
@@ -61,16 +34,7 @@ export default function ActionRow({
   const { copied, copy } = useClipboard();
 
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: "12px",
-        flexWrap: "wrap",
-        animation: "var(--animate-fade-in)",
-        animationDelay: "0.3s",
-        opacity: 0,
-      }}
-    >
+    <div className="flex gap-3 flex-wrap animate-fade-in opacity-0 [animation-delay:0.3s]">
       <OutlineButton onClick={() => copy(coverLetter)}>
         {copied ? <Check size={16} /> : <Copy size={16} />}
         {copied ? "Copied!" : "Copy Cover Letter"}

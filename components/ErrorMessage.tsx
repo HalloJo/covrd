@@ -14,56 +14,23 @@ export default function ErrorMessage({
   onRetry,
 }: ErrorMessageProps) {
   const isRateLimit = message.includes("breath");
-  const Icon = isRateLimit ? Coffee : variant === "card" ? XCircle : AlertCircle;
+  const Icon = isRateLimit
+    ? Coffee
+    : variant === "card"
+    ? XCircle
+    : AlertCircle;
 
   if (variant === "card") {
     return (
-      <div
-        style={{
-          backgroundColor: "#FEF2F2",
-          border: "1px solid #FECACA",
-          borderRadius: "12px",
-          padding: "24px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "12px",
-          textAlign: "center",
-          animation: "var(--animate-slide-up)",
-        }}
-      >
-        <Icon size={32} style={{ color: "#DC2626" }} />
-        <p
-          style={{
-            fontFamily: "var(--font-sans)",
-            color: "#7F1D1D",
-            fontSize: "1rem",
-            lineHeight: 1.6,
-          }}
-        >
+      <div className="bg-[#FEF2F2] border border-[#FECACA] rounded-xl p-6 flex flex-col items-center gap-3 text-center animate-slide-up">
+        <Icon size={32} className="text-[#DC2626]" />
+        <p className="font-sans text-[#7F1D1D] text-base leading-[1.6]">
           {message}
         </p>
         {onRetry && (
           <button
             onClick={onRetry}
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontWeight: 600,
-              fontSize: "0.875rem",
-              color: "var(--color-surface)",
-              backgroundColor: "#DC2626",
-              border: "none",
-              borderRadius: "9999px",
-              padding: "10px 24px",
-              cursor: "pointer",
-              transition: "all 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.opacity = "0.9";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.opacity = "1";
-            }}
+            className="font-sans font-semibold text-sm text-surface bg-[#DC2626] border-0 rounded-full py-2.5 px-6 cursor-pointer transition-all duration-200 hover:opacity-90"
           >
             Try again
           </button>
@@ -73,27 +40,9 @@ export default function ErrorMessage({
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "flex-start",
-        gap: "6px",
-        animation: "var(--animate-slide-up)",
-      }}
-    >
-      <Icon
-        size={14}
-        style={{ color: "var(--color-warning)", flexShrink: 0, marginTop: "2px" }}
-      />
-      <span
-        style={{
-          fontFamily: "var(--font-sans)",
-          fontSize: "0.8125rem",
-          color: "var(--color-warning)",
-        }}
-      >
-        {message}
-      </span>
+    <div className="flex items-start gap-1.5 animate-slide-up">
+      <Icon size={14} className="text-warning shrink-0 mt-0.5" />
+      <span className="font-sans text-[0.8125rem] text-warning">{message}</span>
     </div>
   );
 }

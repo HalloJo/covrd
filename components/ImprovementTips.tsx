@@ -8,81 +8,28 @@ interface ImprovementTipsProps {
 
 export default function ImprovementTips({ tips }: ImprovementTipsProps) {
   return (
-    <div
-      style={{
-        backgroundColor: "var(--color-surface)",
-        border: "1px solid var(--color-border)",
-        borderRadius: "16px",
-        padding: "28px",
-        boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "20px" }}>
-        <Lightbulb size={20} style={{ color: "var(--color-accent)" }} />
-        <h2
-          style={{
-            fontFamily: "var(--font-serif)",
-            fontWeight: 700,
-            fontSize: "1.375rem",
-            color: "var(--color-text)",
-            margin: 0,
-          }}
-        >
+    <div className="bg-surface border border-border rounded-2xl p-7 shadow-[0_1px_4px_rgba(0,0,0,0.04)]">
+      <div className="flex items-center gap-2 mb-5">
+        <Lightbulb size={20} className="text-accent" />
+        <h2 className="font-serif font-bold text-[1.375rem] text-text m-0">
           Tips to Strengthen Your Application
         </h2>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+      <div className="flex flex-col gap-4">
         {tips.map((tip, i) => (
           <div
             key={i}
-            style={{
-              display: "flex",
-              gap: "16px",
-              alignItems: "flex-start",
-              padding: "16px",
-              backgroundColor: "var(--color-background)",
-              borderRadius: "12px",
-              border: "1px solid var(--color-border)",
-              animation: "var(--animate-slide-in-right)",
-              animationDelay: `${0.1 + i * 0.1}s`,
-              opacity: 0,
-            }}
+            className="flex gap-4 items-start p-4 bg-background rounded-xl border border-border animate-slide-in-right opacity-0"
+            style={{ animationDelay: `${0.1 + i * 0.1}s` }}
           >
-            <div
-              style={{
-                width: "28px",
-                height: "28px",
-                borderRadius: "9999px",
-                backgroundColor: "var(--color-accent)",
-                color: "var(--color-surface)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontFamily: "var(--font-sans)",
-                fontWeight: 700,
-                fontSize: "0.8125rem",
-                flexShrink: 0,
-              }}
-            >
+            <div className="w-7 h-7 rounded-full bg-accent text-surface flex items-center justify-center font-sans font-bold text-[0.8125rem] shrink-0">
               {i + 1}
             </div>
-            <p
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: "0.9375rem",
-                color: "var(--color-text)",
-                lineHeight: 1.6,
-                margin: 0,
-                flex: 1,
-              }}
-            >
+            <p className="font-sans text-[0.9375rem] text-text leading-[1.6] m-0 flex-1">
               {tip}
             </p>
-            <ArrowRight
-              size={16}
-              style={{ color: "var(--color-accent)", flexShrink: 0, marginTop: "4px" }}
-            />
+            <ArrowRight size={16} className="text-accent shrink-0 mt-1" />
           </div>
         ))}
       </div>

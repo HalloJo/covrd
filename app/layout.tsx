@@ -26,14 +26,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body
-        style={{
-          backgroundColor: "var(--color-background)",
-          color: "var(--color-text)",
-          fontFamily: "var(--font-sans)",
-          minHeight: "100vh",
-        }}
-      >
+      <body className="bg-background text-text font-sans min-h-screen">
         {children}
       </body>
     </html>

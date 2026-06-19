@@ -28,72 +28,31 @@ export default function ResultsPanel({
   }, []);
 
   return (
-    <div
-      ref={panelRef}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "24px",
-        scrollMarginTop: "80px",
-      }}
-    >
+    <div ref={panelRef} className="flex flex-col gap-6 scroll-mt-20">
       <ScoreBanner score={result.matchScore} />
       <CoverLetterCard coverLetter={result.coverLetter} onRegenerate={onRegenerate} />
 
       {/* Missing Keywords */}
-      <div
-        style={{
-          backgroundColor: "var(--color-surface)",
-          border: "1px solid var(--color-border)",
-          borderRadius: "16px",
-          padding: "28px",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-          animation: "var(--animate-slide-up)",
-          animationDelay: "0.15s",
-          opacity: 0,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
-          <AlertTriangle size={20} style={{ color: "var(--color-warning)" }} />
-          <h2
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontWeight: 700,
-              fontSize: "1.375rem",
-              color: "var(--color-text)",
-              margin: 0,
-            }}
-          >
+      <div className="bg-surface border border-border rounded-2xl p-7 shadow-[0_1px_4px_rgba(0,0,0,0.04)] animate-slide-up [animation-delay:0.15s] opacity-0">
+        <div className="flex items-center gap-2 mb-2">
+          <AlertTriangle size={20} className="text-warning" />
+          <h2 className="font-serif font-bold text-[1.375rem] text-text m-0">
             Keywords You&apos;re Missing
           </h2>
         </div>
-        <p
-          style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: "0.9rem",
-            color: "var(--color-muted)",
-            marginBottom: "16px",
-          }}
-        >
+        <p className="font-sans text-[0.9rem] text-muted mb-4">
           Add these to your CV to improve your chances
         </p>
 
         {result.missingKeywords.length === 0 ? (
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <CheckCircle size={18} style={{ color: "var(--color-success)" }} />
-            <span
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: "0.9375rem",
-                color: "var(--color-success)",
-                fontWeight: 500,
-              }}
-            >
+          <div className="flex items-center gap-2">
+            <CheckCircle size={18} className="text-success" />
+            <span className="font-sans text-[0.9375rem] text-success font-medium">
               Great news — your CV covers all key terms!
             </span>
           </div>
         ) : (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+          <div className="flex flex-wrap gap-2">
             {result.missingKeywords.map((kw, i) => (
               <KeywordBadge
                 key={kw}
@@ -107,64 +66,26 @@ export default function ResultsPanel({
       </div>
 
       {/* Present Keywords */}
-      <div
-        style={{
-          backgroundColor: "var(--color-surface)",
-          border: "1px solid var(--color-border)",
-          borderRadius: "16px",
-          padding: "28px",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-          animation: "var(--animate-fade-in)",
-          animationDelay: "0.2s",
-          opacity: 0,
-        }}
-      >
+      <div className="bg-surface border border-border rounded-2xl p-7 shadow-[0_1px_4px_rgba(0,0,0,0.04)] animate-fade-in [animation-delay:0.2s] opacity-0">
         <button
           onClick={() => setPresentExpanded((prev) => !prev)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "100%",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: 0,
-            gap: "8px",
-          }}
+          className="flex items-center justify-between w-full bg-transparent border-0 cursor-pointer p-0 gap-2"
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <CheckCircle size={20} style={{ color: "var(--color-success)" }} />
-            <h2
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontWeight: 700,
-                fontSize: "1.375rem",
-                color: "var(--color-text)",
-                margin: 0,
-              }}
-            >
+          <div className="flex items-center gap-2">
+            <CheckCircle size={20} className="text-success" />
+            <h2 className="font-serif font-bold text-[1.375rem] text-text m-0">
               What You&apos;ve Got
             </h2>
           </div>
           {presentExpanded ? (
-            <ChevronUp size={20} style={{ color: "var(--color-muted)" }} />
+            <ChevronUp size={20} className="text-muted" />
           ) : (
-            <ChevronDown size={20} style={{ color: "var(--color-muted)" }} />
+            <ChevronDown size={20} className="text-muted" />
           )}
         </button>
 
         {presentExpanded && (
-          <div
-            style={{
-              marginTop: "16px",
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "8px",
-              animation: "var(--animate-slide-up)",
-              opacity: 0,
-            }}
-          >
+          <div className="mt-4 flex flex-wrap gap-2 animate-slide-up opacity-0">
             {result.presentKeywords.map((kw, i) => (
               <KeywordBadge
                 key={kw}

@@ -21,91 +21,33 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main
-        style={{
-          maxWidth: "1120px",
-          margin: "0 auto",
-          padding: "0 24px 80px",
-        }}
-      >
+      <main className="max-w-280 mx-auto px-6 pb-20">
         {/* Hero */}
-        <section
-          ref={formRef}
-          style={{
-            paddingTop: "72px",
-            paddingBottom: "56px",
-            textAlign: "center",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "10px",
-              marginBottom: "20px",
-            }}
-          >
-            <Sparkles size={22} style={{ color: "var(--color-accent)" }} />
-            <span
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontWeight: 500,
-                fontSize: "0.9rem",
-                color: "var(--color-accent)",
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-              }}
-            >
+        <section ref={formRef} className="pt-18 pb-14 text-center">
+          <div className="flex items-center justify-center gap-2.5 mb-5">
+            <Sparkles size={22} className="text-accent" />
+            <span className="font-sans font-medium text-[0.9rem] text-accent tracking-[0.04em] uppercase">
               AI-powered application tailoring
             </span>
           </div>
-          <h1
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontWeight: 900,
-              fontSize: "clamp(2.5rem, 6vw, 4rem)",
-              color: "var(--color-text)",
-              lineHeight: 1.1,
-              margin: "0 auto 20px",
-              maxWidth: "780px",
-            }}
-          >
+          <h1 className="font-serif font-black text-[clamp(2.5rem,6vw,4rem)] text-text leading-[1.1] mx-auto mb-5 max-w-[780px]">
             Your CV. Their job.{" "}
-            <span style={{ color: "var(--color-accent)" }}>Perfect match.</span>
+            <span className="text-accent">Perfect match.</span>
           </h1>
-          <p
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "clamp(1rem, 2.5vw, 1.1875rem)",
-              color: "var(--color-muted)",
-              lineHeight: 1.7,
-              margin: "0 auto",
-              maxWidth: "620px",
-            }}
-          >
+          <p className="font-sans text-[clamp(1rem,2.5vw,1.1875rem)] text-muted leading-[1.7] mx-auto max-w-[620px]">
             Paste a job description and your CV — Covrd writes a tailored cover
             letter and shows exactly what keywords you&apos;re missing.
           </p>
         </section>
 
         {/* Input form card */}
-        <section
-          style={{
-            backgroundColor: "var(--color-surface)",
-            border: "1px solid var(--color-border)",
-            borderRadius: "20px",
-            padding: "36px",
-            boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
-            marginBottom: "48px",
-          }}
-        >
+        <section className="bg-surface border border-border rounded-[20px] p-9 shadow-[0_2px_12px_rgba(0,0,0,0.05)] mb-12">
           <InputForm onSubmit={generate} isLoading={isLoading} />
         </section>
 
         {/* API-level error card (rate limit, network) */}
         {error && !isLoading && (
-          <section style={{ marginBottom: "48px" }}>
+          <section className="mb-12">
             <ErrorMessage message={error} variant="card" onRetry={handleStartOver} />
           </section>
         )}

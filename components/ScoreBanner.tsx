@@ -25,22 +25,9 @@ export default function ScoreBanner({ score }: ScoreBannerProps) {
   const dashOffset = circumference - (score / 100) * circumference;
 
   return (
-    <div
-      style={{
-        backgroundColor: "var(--color-accent-light)",
-        border: "1px solid var(--color-border)",
-        borderRadius: "16px",
-        padding: "32px",
-        display: "flex",
-        alignItems: "center",
-        gap: "28px",
-        flexWrap: "wrap",
-        animation: "var(--animate-fade-in)",
-        opacity: 0,
-      }}
-    >
+    <div className="bg-accent-light border border-border rounded-2xl p-8 flex items-center gap-7 flex-wrap animate-fade-in opacity-0">
       {/* Score ring */}
-      <div style={{ position: "relative", flexShrink: 0 }}>
+      <div className="relative shrink-0">
         <svg width="88" height="88" viewBox="0 0 88 88">
           <circle
             cx="44"
@@ -64,79 +51,33 @@ export default function ScoreBanner({ score }: ScoreBannerProps) {
             style={{ transition: "stroke-dashoffset 1s ease-out" }}
           />
         </svg>
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <div className="absolute inset-0 flex items-center justify-center">
           <span
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontWeight: 900,
-              fontSize: "1.25rem",
-              color,
-              lineHeight: 1,
-            }}
+            className="font-serif font-black text-xl leading-none"
+            style={{ color }}
           >
             {score}%
           </span>
         </div>
       </div>
 
-      <div style={{ flex: 1, minWidth: "200px" }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            marginBottom: "8px",
-          }}
-        >
-          <Target size={20} style={{ color: "var(--color-accent)" }} />
-          <h2
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontWeight: 700,
-              fontSize: "1.375rem",
-              color: "var(--color-text)",
-              margin: 0,
-            }}
-          >
+      <div className="flex-1 min-w-50">
+        <div className="flex items-center gap-2 mb-2">
+          <Target size={20} className="text-accent" />
+          <h2 className="font-serif font-bold text-[1.375rem] text-text m-0">
             Your Match Score
           </h2>
         </div>
-        <p
-          style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: "0.9375rem",
-            color: "var(--color-muted)",
-            margin: 0,
-            lineHeight: 1.5,
-          }}
-        >
+        <p className="font-sans text-[0.9375rem] text-muted m-0 leading-normal">
           Based on keyword alignment and experience match
         </p>
         <div
-          style={{
-            marginTop: "12px",
-            display: "inline-block",
-            padding: "4px 14px",
-            borderRadius: "9999px",
-            backgroundColor: bg,
-            border: `1px solid ${color}22`,
-          }}
+          className="mt-3 inline-block py-1 px-3.5 rounded-full"
+          style={{ backgroundColor: bg, border: `1px solid ${color}22` }}
         >
           <span
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontWeight: 600,
-              fontSize: "0.8125rem",
-              color,
-            }}
+            className="font-sans font-semibold text-[0.8125rem]"
+            style={{ color }}
           >
             {score >= 70
               ? "Strong match — great position!"

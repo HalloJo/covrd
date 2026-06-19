@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Briefcase, FileText, Sparkles, Loader2, AlertCircle } from "lucide-react";
+import {
+  Briefcase,
+  FileText,
+  Sparkles,
+  Loader2,
+  AlertCircle,
+} from "lucide-react";
 
 interface InputFormProps {
   onSubmit: (jobDescription: string, cvText: string) => void;
@@ -18,21 +24,21 @@ const JD_MAX = 3000;
 const CV_MIN = 100;
 const CV_MAX = 3000;
 
+const textareaBase =
+  "w-full min-h-[220px] resize-y font-sans text-[0.9375rem] leading-[1.6] text-text bg-surface border rounded-xl py-[14px] px-4 outline-none transition-[border-color,box-shadow] duration-200 focus:shadow-[0_0_0_3px_rgba(61,107,79,0.12)] disabled:opacity-50";
+
 function CharCounter({ current, max }: { current: number; max: number }) {
   const isNear = current > max * 0.85;
   const isOver = current > max;
   return (
     <span
-      style={{
-        fontFamily: "var(--font-sans)",
-        fontSize: "0.75rem",
-        color: isOver
-          ? "#DC2626"
+      className={`font-sans text-xs ${
+        isOver
+          ? "text-[#DC2626] font-semibold"
           : isNear
-          ? "var(--color-warning)"
-          : "var(--color-muted)",
-        fontWeight: isOver ? 600 : 400,
-      }}
+          ? "text-warning font-normal"
+          : "text-muted font-normal"
+      }`}
     >
       {current} / {max}
     </span>
@@ -41,28 +47,9 @@ function CharCounter({ current, max }: { current: number; max: number }) {
 
 function FieldError({ message }: { message: string }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "flex-start",
-        gap: "5px",
-        animation: "var(--animate-slide-up)",
-        opacity: 0,
-      }}
-    >
-      <AlertCircle
-        size={13}
-        style={{ color: "var(--color-warning)", flexShrink: 0, marginTop: "2px" }}
-      />
-      <span
-        style={{
-          fontFamily: "var(--font-sans)",
-          fontSize: "0.8125rem",
-          color: "var(--color-warning)",
-        }}
-      >
-        {message}
-      </span>
+    <div className="flex items-start gap-1.25 animate-slide-up opacity-0">
+      <AlertCircle size={13} className="text-warning shrink-0 mt-0.5" />
+      <span className="font-sans text-[0.8125rem] text-warning">{message}</span>
     </div>
   );
 }
@@ -101,49 +88,16 @@ export default function InputForm({ onSubmit, isLoading }: InputFormProps) {
     }
   };
 
-  const textareaBase: React.CSSProperties = {
-    width: "100%",
-    minHeight: "220px",
-    resize: "vertical",
-    fontFamily: "var(--font-sans)",
-    fontSize: "0.9375rem",
-    lineHeight: 1.6,
-    color: "var(--color-text)",
-    backgroundColor: "var(--color-surface)",
-    border: "1px solid var(--color-border)",
-    borderRadius: "12px",
-    padding: "14px 16px",
-    outline: "none",
-    transition: "border-color 0.2s, box-shadow 0.2s",
-  };
-
   return (
     <form onSubmit={handleSubmit}>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gap: "24px",
-          marginBottom: "28px",
-        }}
-      >
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6 mb-7">
         {/* Job Description */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-          <label
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
-              fontFamily: "var(--font-sans)",
-              fontWeight: 600,
-              fontSize: "0.9375rem",
-              color: "var(--color-text)",
-            }}
-          >
-            <Briefcase size={16} style={{ color: "var(--color-accent)" }} />
+        <div className="flex flex-col gap-2">
+          <label className="flex items-center gap-1.5 font-sans font-semibold text-[0.9375rem] text-text">
+            <Briefcase size={16} className="text-accent" />
             Job Description
           </label>
-          <div style={{ position: "relative" }}>
+          <div className="relative">
             <textarea
               value={jobDescription}
               onChange={(e) => {
@@ -155,30 +109,14 @@ export default function InputForm({ onSubmit, isLoading }: InputFormProps) {
               placeholder="Paste the full job description here..."
               maxLength={JD_MAX + 200}
               disabled={isLoading}
-              style={{
-                ...textareaBase,
-                borderColor: errors.jobDescription
-                  ? "var(--color-warning)"
-                  : "var(--color-border)",
-              }}
-              onFocus={(e) => {
-                if (!errors.jobDescription) {
-                  (e.currentTarget as HTMLTextAreaElement).style.borderColor =
-                    "var(--color-accent)";
-                  (e.currentTarget as HTMLTextAreaElement).style.boxShadow =
-                    "0 0 0 3px rgba(61,107,79,0.12)";
-                }
-              }}
-              onBlur={(e) => {
-                (e.currentTarget as HTMLTextAreaElement).style.borderColor =
-                  errors.jobDescription
-                    ? "var(--color-warning)"
-                    : "var(--color-border)";
-                (e.currentTarget as HTMLTextAreaElement).style.boxShadow = "none";
-              }}
+              className={`${textareaBase} ${
+                errors.jobDescription
+                  ? "border-warning focus:border-warning"
+                  : "border-border focus:border-accent"
+              }`}
             />
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", minHeight: "18px" }}>
+          <div className="flex justify-between items-start min-h-4.5">
             {errors.jobDescription ? (
               <FieldError message={errors.jobDescription} />
             ) : (
@@ -189,22 +127,12 @@ export default function InputForm({ onSubmit, isLoading }: InputFormProps) {
         </div>
 
         {/* CV */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-          <label
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
-              fontFamily: "var(--font-sans)",
-              fontWeight: 600,
-              fontSize: "0.9375rem",
-              color: "var(--color-text)",
-            }}
-          >
-            <FileText size={16} style={{ color: "var(--color-accent)" }} />
+        <div className="flex flex-col gap-2">
+          <label className="flex items-center gap-1.5 font-sans font-semibold text-[0.9375rem] text-text">
+            <FileText size={16} className="text-accent" />
             Your CV / Resume
           </label>
-          <div style={{ position: "relative" }}>
+          <div className="relative">
             <textarea
               value={cvText}
               onChange={(e) => {
@@ -216,28 +144,14 @@ export default function InputForm({ onSubmit, isLoading }: InputFormProps) {
               placeholder="Paste your CV or resume here..."
               maxLength={CV_MAX + 200}
               disabled={isLoading}
-              style={{
-                ...textareaBase,
-                borderColor: errors.cvText
-                  ? "var(--color-warning)"
-                  : "var(--color-border)",
-              }}
-              onFocus={(e) => {
-                if (!errors.cvText) {
-                  (e.currentTarget as HTMLTextAreaElement).style.borderColor =
-                    "var(--color-accent)";
-                  (e.currentTarget as HTMLTextAreaElement).style.boxShadow =
-                    "0 0 0 3px rgba(61,107,79,0.12)";
-                }
-              }}
-              onBlur={(e) => {
-                (e.currentTarget as HTMLTextAreaElement).style.borderColor =
-                  errors.cvText ? "var(--color-warning)" : "var(--color-border)";
-                (e.currentTarget as HTMLTextAreaElement).style.boxShadow = "none";
-              }}
+              className={`${textareaBase} ${
+                errors.cvText
+                  ? "border-warning focus:border-warning"
+                  : "border-border focus:border-accent"
+              }`}
             />
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", minHeight: "18px" }}>
+          <div className="flex justify-between items-start min-h-4.5">
             {errors.cvText ? <FieldError message={errors.cvText} /> : <span />}
             <CharCounter current={cvText.length} max={CV_MAX} />
           </div>
@@ -245,46 +159,19 @@ export default function InputForm({ onSubmit, isLoading }: InputFormProps) {
       </div>
 
       {/* Submit button */}
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div className="flex justify-center">
         <button
           type="submit"
           disabled={isLoading}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            fontFamily: "var(--font-sans)",
-            fontWeight: 600,
-            fontSize: "1rem",
-            color: "var(--color-surface)",
-            backgroundColor: isLoading ? "#6B9B7F" : "var(--color-accent)",
-            border: "none",
-            borderRadius: "9999px",
-            padding: "14px 36px",
-            cursor: isLoading ? "not-allowed" : "pointer",
-            transition: "all 0.2s",
-            minHeight: "52px",
-            minWidth: "240px",
-            justifyContent: "center",
-          }}
-          onMouseEnter={(e) => {
-            if (!isLoading) {
-              (e.currentTarget as HTMLButtonElement).style.opacity = "0.9";
-              (e.currentTarget as HTMLButtonElement).style.transform =
-                "scale(1.02)";
-            }
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.opacity = "1";
-            (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)";
-          }}
+          className={`flex items-center justify-center gap-2 font-sans font-semibold text-base text-surface border-0 rounded-full py-3.5 px-9 transition-all duration-200 min-h-13 min-w-60 ${
+            isLoading
+              ? "bg-[#6B9B7F] cursor-not-allowed"
+              : "bg-accent cursor-pointer hover:opacity-90 hover:scale-[1.02]"
+          }`}
         >
           {isLoading ? (
             <>
-              <Loader2
-                size={18}
-                style={{ animation: "spin 1s linear infinite" }}
-              />
+              <Loader2 size={18} className="animate-spin" />
               Analysing your fit...
             </>
           ) : (
