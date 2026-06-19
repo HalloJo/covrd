@@ -6,9 +6,14 @@ import { useState, useEffect } from "react";
 const CREATED_AT = new Date("2026-06-19T10:57:00.000Z");
 
 function useElapsed() {
-  const [elapsed, setElapsed] = useState(() => Date.now() - CREATED_AT.getTime());
+  const [elapsed, setElapsed] = useState(
+    () => Date.now() - CREATED_AT.getTime()
+  );
   useEffect(() => {
-    const id = setInterval(() => setElapsed(Date.now() - CREATED_AT.getTime()), 1000);
+    const id = setInterval(
+      () => setElapsed(Date.now() - CREATED_AT.getTime()),
+      1000
+    );
     return () => clearInterval(id);
   }, []);
   return elapsed;
@@ -32,85 +37,24 @@ export default function Header() {
   const elapsed = useElapsed();
 
   return (
-    <header
-      style={{
-        backgroundColor: "var(--color-surface)",
-        borderBottom: "1px solid var(--color-border)",
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1120px",
-          margin: "0 auto",
-          padding: "0 24px",
-          height: "64px",
-          display: "flex",
-          alignItems: "center",
-          gap: "12px",
-        }}
-      >
-        <FileCheck
-          size={28}
-          style={{ color: "var(--color-accent)", flexShrink: 0 }}
-        />
-        <div style={{ display: "flex", alignItems: "baseline", gap: "12px" }}>
-          <span
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontWeight: 900,
-              fontSize: "1.5rem",
-              color: "var(--color-accent)",
-              lineHeight: 1,
-            }}
-          >
+    <header className="bg-surface border-b border-border sticky top-0 z-50">
+      <div className="max-w-280 mx-auto px-6 h-16 flex items-center gap-3">
+        <FileCheck size={28} className="text-accent shrink-0" />
+
+        <div className="flex items-baseline gap-3">
+          <span className="font-serif font-black text-2xl text-accent leading-none">
             Covrd
           </span>
-          <span
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "0.875rem",
-              color: "var(--color-muted)",
-              fontWeight: 400,
-            }}
-          >
+          <span className="font-sans text-sm text-muted font-normal">
             Land the job. Every time.
           </span>
         </div>
 
-        {/* Age counter — pushed to the right */}
-        <div
-          style={{
-            marginLeft: "auto",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-end",
-            gap: "1px",
-          }}
-        >
-          <span
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "0.6875rem",
-              color: "var(--color-muted)",
-              fontWeight: 500,
-              textTransform: "uppercase",
-              letterSpacing: "0.06em",
-            }}
-          >
+        <div className="ml-auto flex flex-col items-end gap-px">
+          <span className="font-sans text-[0.6875rem] text-muted font-medium uppercase tracking-[0.06em]">
             live since
           </span>
-          <span
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.8125rem",
-              color: "var(--color-accent)",
-              fontWeight: 600,
-              letterSpacing: "0.02em",
-            }}
-          >
+          <span className="font-mono text-[0.8125rem] text-accent font-semibold tracking-[0.02em]">
             {formatElapsed(elapsed)}
           </span>
         </div>
